@@ -47,7 +47,7 @@ def bot():
     issue = repo.get_issue(number=payload['pull_request']['number'])
 
     # Call meme-api to get a random meme
-    response = requests.get(url='https://meme-api.herokuapp.com/gimme')
+    response = requests.get(url='https://meme-api.com/gimme')
     if response.status_code != 200:
         return 'ok'
 
