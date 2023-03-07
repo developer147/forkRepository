@@ -4,7 +4,6 @@ import requests
 from flask import Flask, request
 from github import Github, GithubIntegration
 
-
 app = Flask(__name__)
 # MAKE SURE TO CHANGE TO YOUR APP NUMBER!!!!!
 app_id = '301947'
