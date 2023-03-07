@@ -53,7 +53,6 @@ def temporary_code():
     print(response.text)
     #json_data = json.loads(response.text)
     print("access_token", json_res['access_token'], "expires_in", json_res['expires_in'], "refresh_token", json_res['refresh_token'], "refresh_token_expires_in", json_res["refresh_token_expires_in"], "token_type", json_res["token_type"], "scope", json_res["scope"])
-    #return redirect(url_for('https://github.com/login/oauth/access_token', json=json.dumps(dictToSend)), code=307)
 
     # fork repository code
     # https://docs.github.com/en/rest/repos/forks?apiVersion=2022-11-28#create-a-fork
