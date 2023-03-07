@@ -20,7 +20,6 @@ git_integration = GithubIntegration(
     app_key,
 )
 
-
 @app.route("/", methods=['POST'])
 def bot():
     # Get the event payload
