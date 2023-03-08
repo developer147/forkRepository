@@ -70,5 +70,5 @@ def access_token():
     print('access_token', access_token)
     return 'Ok'
 
-if __name__ == "__main__":
-    app.run(debug=True, port=9001)
+# if __name__ == "__main__":
+#     app.run(debug=True, port=9001)
