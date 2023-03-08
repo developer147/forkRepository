@@ -24,7 +24,7 @@ def authorize():
                     #+'Iv1.704767f61055888b'
                     +'Iv1.9af4fde068c2b9f9'
                     +'&redirect_uri='
-                    +'https://fork-repo-app.herokuapp.com/'
+                    +'https://fork-repo-app.herokuapp.com/forkRepo'
                     +'&state='
                     +'Nugget123')
 
