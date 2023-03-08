@@ -26,6 +26,10 @@ git_integration = GithubIntegration(
 def index():
     return render_template('index.html')
 
+@app.route('/main')
+def main():
+    return render_template('main.html')
+
 @app.route('/forkRepoInit')
 def forkRepoInit():
     # return redirect(url_for('https://github.com/login/oauth/authorize',
@@ -60,12 +64,18 @@ def temporary_code():
         'Accept': 'application/vnd.github+json',
         'Authorization': 'Bearer ' + json_res['access_token'],
         'X-GitHub-Api-Version': '2022-11-28',
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded'
     }
 
-    data = '{"name":"forkRepositoryClone2","default_branch_only":false}'
-    response = requests.post('https://api.github.com/repos/developer147/forkRepository/forks', headers=headers, data=data)
-    print("fork repo response status code", response.status_code)
+    data = '{"name":"test2","default_branch_only":false}'
+    #response = requests.post('https://github.com/api/v3/repos/developer147/forkRepository/forks', headers=headers, data=data)
+    response = requests.post('https://api.github.com/repos/developer147/securesocial/forks', headers=headers, data=data)
+
+    json_res = response.json
+    print(json_res)
+    #print("message", json_res['message'])
+
+    print("fork repo response status", response.status_code, "text response", response.text)
     return 'Ok'
 
 @app.route('/accessToken')
