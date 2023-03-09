@@ -6,36 +6,61 @@ from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 Bootstrap(app)
-# MAKE SURE TO CHANGE TO YOUR APP NUMBER!!!!!
-#app_id = '301947'
-app_id = '302861'
+environment_configuration = os.environ['CONFIGURATION_SETUP']
+app.config.from_object(environment_configuration)
+print(f"Environment: {app.config['ENV']}")
+print(f"Debug: {app.config['DEBUG']}")
+
+# github_app_id = app.config['GITHUB_APP_ID']
+# print(f"Github App ID: {github_app_id}")
+
+github_app_client_id = app.config['GITHUB_APP_CLIENT_ID']
+print(f"Github App Client ID: {github_app_client_id}")
+
+redirect_uri_on_authorization = app.config['REDIRECT_URI_ON_AUTHORIZATION']
+print(f"Redirect Uri On Authorization: {redirect_uri_on_authorization}")
+
+redirect_state = app.config['REDIRECT_STATE']
+print(f"Redirect State: {redirect_state}")
+
+github_app_client_secret = app.config['GITHUB_APP_CLIENT_SECRET']
+print(f"Github App Client Secret: {github_app_client_secret}")
+
+redirect_uri_for_access_token = app.config['REDIRECT_URI_FOR_ACCESS_TOKEN']
+print(f"Redirect Uri For Access Token: {redirect_uri_for_access_token}")
+
+github_fork_repo_app_uri = app.config['GITHUB_FORK_REPO_APP_URI']
+print(f"Github Fork Repo App URI: {github_fork_repo_app_uri}")
+
+authorization_uri = app.config['AUTHORIZATION_URI']
+print(f"Authorization URI: {authorization_uri}")
+
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', github_app_uri=github_fork_repo_app_uri)
 
 @app.route('/main')
 def main():
-    return render_template('main.html')
+    return render_template('main.html', auth_uri=authorization_uri)
 
 @app.route('/authorize')
 def authorize():
     return redirect('https://github.com/login/oauth/authorize?client_id='
-                    #+'Iv1.704767f61055888b'
-                    +'Iv1.9af4fde068c2b9f9'
+                    + github_app_client_id
                     +'&redirect_uri='
-                    +'https://fork-repo-app.herokuapp.com/forkRepo'
+                    + redirect_uri_on_authorization
                     +'&state='
-                    +'Nugget123')
+                    + redirect_state)
 
 @app.route('/forkRepo')
 def fork_repo():
     code = request.args.get('code')
     state = request.args.get('state')
     print('code', code, 'state', state)
-    #dictToSend = {'client_id':'Iv1.704767f61055888b', 'client_secret': 'd0d97dbb3355db790fd49c644ee84d71f9525bbc', 'code': code, 'redirect_uri': 'https://fork-repo-app.herokuapp.com/accessToken'}
-    dictToSend = {'client_id': 'Iv1.9af4fde068c2b9f9', 'client_secret': '77279b0490345a51ba3cb1f4735da28be95a9fbb',
-                  'code': code, 'redirect_uri': 'https://fork-repo-app.herokuapp.com/accessToken'}
+
+    dictToSend = {'client_id': github_app_client_id, 'client_secret': github_app_client_secret,
+                  'code': code, 'redirect_uri': redirect_uri_for_access_token}
     headers = {"Accept":"application/json"}
     response = requests.post('https://github.com/login/oauth/access_token', json=dictToSend, headers=headers)
     print("status code", response.status_code)
@@ -68,5 +93,6 @@ def access_token():
     print('access_token', access_token)
     return 'Ok'
 
-# if __name__ == "__main__":
-#     app.run(debug=True, port=9001)
+if __name__ == "__main__":
+    #app.run(debug=True, port=9001)
+    app.run()
