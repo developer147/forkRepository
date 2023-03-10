@@ -64,7 +64,7 @@ def fork_repo():
 @app.route('/accessToken')
 def access_token():
     access_token = request.args.get('access_token')
-    return 'Ok'
+    return redirect('/main')
 
 if __name__ == "__main__":
     #app.run(debug=True, port=9001)
